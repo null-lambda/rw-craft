@@ -1,0 +1,113 @@
+button {
+  cursor: pointer;
+  transition-duration: 0.2s;
+  background-color: rgba(64, 64, 64, 0.5);
+  border: 2px solid white;
+  border-radius: 20%;
+  color: inherit;
+  padding: 0px;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: unset;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.fade {
+  opacity: 0.2;
+}
+
+.recipe-table {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.recipe-table > table {
+  margin: 20px;
+}
+
+table {
+  padding: 2px;
+  background-color: rgba(255, 255, 255, 0.2) ;
+  border-radius: 10px;
+  border-collapse: separate;
+}
+
+.item-button {
+  width: 35px;
+  height: 35px;
+}
+
+.item-button img {
+  max-height: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+  text-align: center;
+  /* image-rendering: pixelated; */
+}
+
+.item-tray {
+  margin-left: 20vw;
+  margin-right: 20vw;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.item-tray-row {
+  display:flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  /* text-align: left; */
+}
+
+.item-tray-row > button {
+  margin: 2px;
+}
+
+section {
+  flex: 1;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+section > div {
+  display: block;
+  margin: 10px;
+  text-align: center;
+}
+
+footer {
+   background-color: #0c0c0c;
+}
+
+a {
+  color: lightgray;
+}
+
+.app-header {
+  font-size: 2em;
+}
+
+.app {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  caret-color: transparent;
+}
