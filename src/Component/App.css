@@ -28,15 +28,20 @@ table {
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
+  max-width: 90vw;
 }
 
-.recipe-table > table {
+.recipe-table .wrapper {
+  overflow-x: auto;
+}
+
+.recipe-table .wrapper table {
   margin: 20px;
 }
 
 table {
   padding: 2px;
-  background-color: rgba(255, 255, 255, 0.2) ;
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   border-collapse: separate;
 }
@@ -63,7 +68,7 @@ table {
   align-content: flex-start;
 }
 .item-tray-row {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
   /* text-align: left; */
@@ -90,7 +95,7 @@ section > div {
 }
 
 footer {
-   background-color: #0c0c0c;
+  background-color: #0c0c0c;
 }
 
 a {

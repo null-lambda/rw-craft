@@ -1,8 +1,11 @@
 import "./App.css";
-import data from "../data";
-import _ from "lodash";
 import { ItemIcon, ItemButton } from "./Item";
-import { connectedComponents, maxTwoColorableSubgraphs } from "../graph.js";
+import data from "../data";
+import { connectedComponents, maxTwoColorableSubgraphs } from "../graph";
+import _ from "lodash";
+import React from "react";
+
+// Todo: Resolve prop drilling
 
 function decomposeHeader(filterFn, header) {
   const graph = header.map((r) =>
@@ -45,7 +48,7 @@ function removeDuplicateHeaders(filterFn, header) {
   idx1.sort((a, b) => a - b);
   idx2.sort((a, b) => a - b);
 
-  const score1 = (i) => -_.sum(graph[i].map(b => Number(b)));
+  const score1 = (i) => -_.sum(graph[i].map((b) => Number(b)));
   idx1 = _.sortBy(idx1, score1);
   idx2 = _.sortBy(idx2, score1);
 
@@ -112,14 +115,16 @@ function RecipeTable({ rowHeader, colHeader, filterFn, onClick }) {
   );
 
   return (
-    <table>
-      <tbody>
-        <HeaderRow />
-        {colHeader.map((_, i) => (
-          <Row key={i} idx={i} />
-        ))}
-      </tbody>
-    </table>
+    <div className="wrapper">
+      <table>
+        <tbody>
+          <HeaderRow />
+          {colHeader.map((_, i) => (
+            <Row key={i} idx={i} />
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -132,32 +137,33 @@ function SourceTables({ onClick, targets }) {
   const filterFn = (name) => targets_.has(name);
 
   // Filter table row and column
-  header = header.filter((r) => header.some((c) => filterFn(recipe[r][c])));
+  header = header.filter((r) =>
+    header.some((c) => filterFn(data.recipe[r][c]))
+  );
   if (header.length === 0) {
     return null;
   }
 
-  headers = [header];
   headers = decomposeHeader(filterFn, [...header]);
+
+  headers = headers.map((header) => {
+    // header = _.sortBy(header, x => data.order.color[x]);
+    let { rowHeader, colHeader } = removeDuplicateHeaders(filterFn, [
+      ...header,
+    ]);
+    return { rowHeader, colHeader };
+  });
 
   return (
     <div className="recipe-table">
-      {headers.map((header, header_idx) => {
-        // header = _.sortBy(header, x => data.order.color[x]);
-        let { rowHeader, colHeader } = removeDuplicateHeaders(filterFn, [
-          ...header,
-        ]);
-
-        return (
-          <RecipeTable
-            key={header_idx}
-            rowHeader={rowHeader}
-            colHeader={colHeader}
-            filterFn={filterFn}
-            onClick={onClick}
-          />
-        );
-      })}
+      {headers.map((props, idx) => (
+        <RecipeTable
+          key={idx}
+          {...props}
+          filterFn={filterFn}
+          onClick={onClick}
+        />
+      ))}
     </div>
   );
 }
