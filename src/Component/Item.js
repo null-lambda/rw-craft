@@ -4,7 +4,7 @@ function ItemIcon({ name }) {
   if (name === null) {
     return null;
   }
-  return <img src={`icons/${name}.png`} className="item-icon" alt={name} />;
+  return <img src={`${process.env.PUBLIC_URL}/icons/${name}.png`} className="item-icon" alt={name} />;
 }
 
 function ItemButton({ name, onClick }) {
