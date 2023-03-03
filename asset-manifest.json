@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/rw-craft/static/css/main.12a0e470.css",
-    "main.js": "/rw-craft/static/js/main.0948e484.js",
+    "main.css": "/rw-craft/static/css/main.61ba407e.css",
+    "main.js": "/rw-craft/static/js/main.5639d61b.js",
     "static/js/787.459930a1.chunk.js": "/rw-craft/static/js/787.459930a1.chunk.js",
     "index.html": "/rw-craft/index.html",
-    "main.12a0e470.css.map": "/rw-craft/static/css/main.12a0e470.css.map",
-    "main.0948e484.js.map": "/rw-craft/static/js/main.0948e484.js.map",
+    "main.61ba407e.css.map": "/rw-craft/static/css/main.61ba407e.css.map",
+    "main.5639d61b.js.map": "/rw-craft/static/js/main.5639d61b.js.map",
     "787.459930a1.chunk.js.map": "/rw-craft/static/js/787.459930a1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.12a0e470.css",
-    "static/js/main.0948e484.js"
+    "static/css/main.61ba407e.css",
+    "static/js/main.5639d61b.js"
   ]
 }
