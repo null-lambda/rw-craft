@@ -9,9 +9,9 @@ function ItemTray({ onClick }) {
   let items = _.uniq([...data.sources, ...data.targets]);
   items = _.difference(items, ["Food"]);
   // items = _.sortBy(items, x => data.order.name[x]);
-  items = _.sortBy(items, x => data.order.color[x]);
+  items = _.sortBy(items, (x) => data.order.color[x]);
 
-  const options = ['all', ...items];
+  const options = ["all", ...items];
   const grid = [options];
 
   return (

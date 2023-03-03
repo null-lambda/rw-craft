@@ -130,7 +130,6 @@ function RecipeTable({ rowHeader, colHeader, filterFn, onClick }) {
 
 function SourceTables({ onClick, targets }) {
   let headers = [data.sources];
-  const recipe = data.recipe;
   let header = data.sources;
 
   const targets_ = new Set(targets);
