@@ -20,12 +20,12 @@ button {
   padding: 0;
   transition-duration: 0.2s;
   font-family: inherit;
+  box-shadow: none;
 }
 
 button:hover {
   background: hsla(0, 0%, 100%, 0.5);
   border: 2px solid hsla(0, 0%, 100%, 0.8);
-  box-shadow: none;
 }
 
 table {
@@ -51,7 +51,7 @@ table {
   right: 2px;
   text-align: center;
   font-size: 15px;
-  text-shadow: 1px 1px black;
+  text-shadow: 0 0 0.1em black, 0 0 0.2em black, 0 0 0.3em black;
 }
 
 .fade {
