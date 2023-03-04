@@ -1,7 +1,7 @@
-import data from "./generated.js";
 import convert from "color-convert";
+import preData from "./generated.js";
 
-let { sources, targets, recipe, order, iconColor } = data;
+let { sources, targets, recipe, order, iconColor } = preData;
 
 const itemGrid = [
   ["Rubbish", "Flashbang", "Slime Mold", "Lantern", "Mushroom"],
@@ -24,4 +24,5 @@ order["color"] = Object.fromEntries(
   })
 );
 
-export default { sources, itemGrid, targets, recipe, order };
+const data = { sources, itemGrid, targets, recipe, order };
+export default data;

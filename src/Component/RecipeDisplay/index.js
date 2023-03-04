@@ -1,11 +1,10 @@
-import "./App.css";
-import { ItemIcon, ItemButton } from "./Item";
-import data from "../data";
-import { connectedComponents, maxTwoColorableSubgraphs } from "../graph";
 import _ from "lodash";
-import React from "react";
-
-// Todo: Resolve prop drilling
+import { ItemIcon } from "../Item";
+import data from "../../data";
+import React, { useState } from "react";
+import { ItemTray } from "../ItemTray";
+import { connectedComponents, maxTwoColorableSubgraphs } from "../../graph";
+import { RecipeTable } from "./RecipeTable";
 
 function decomposeHeader(filterFn, header) {
   const graph = header.map((r) =>
@@ -63,72 +62,7 @@ function removeDuplicateHeaders(filterFn, header) {
   return { rowHeader, colHeader };
 }
 
-function RecipeTable({ rowHeader, colHeader, filterFn, onClick }) {
-  const inner = colHeader.map((c) => rowHeader.map((r) => data.recipe[r][c]));
-  if (inner.length === 0) {
-    return null;
-  }
-
-  const CellData = ({ name }) => {
-    if (name === null) {
-      return "-";
-    }
-    if (name.includes("Food")) {
-      const count = name.split("-")[1];
-      return (
-        <span>
-          <ItemIcon name="Food" />
-          {count}
-        </span>
-      );
-    }
-    return <ItemIcon name={name} />;
-  };
-
-  const HeaderRow = () => (
-    <tr>
-      <th key="0">
-        <span style={{ fontSize: "20px" }}>+</span>
-      </th>
-      {rowHeader.map((name) => (
-        <th key={name}>
-          <ItemButton name={name} onClick={() => onClick(name)} />
-        </th>
-      ))}
-    </tr>
-  );
-
-  const Row = ({ idx }) => (
-    <tr>
-      <th key={-1}>
-        <ItemButton
-          name={colHeader[idx]}
-          onClick={() => onClick(colHeader[idx])}
-        />
-      </th>
-      {inner[idx].map((name, j) => (
-        <td key={j} className={!filterFn(name) ? "fade" : undefined}>
-          <CellData name={name} />
-        </td>
-      ))}
-    </tr>
-  );
-
-  return (
-    <div className="wrapper">
-      <table>
-        <tbody>
-          <HeaderRow />
-          {colHeader.map((_, i) => (
-            <Row key={i} idx={i} />
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function SourceTables({ onClick, targets }) {
+function SourceDisplay({ onClick, targets }) {
   let headers = [data.sources];
   let header = data.sources;
 
@@ -154,7 +88,7 @@ function SourceTables({ onClick, targets }) {
   });
 
   return (
-    <div className="recipe-table">
+    <div className="source-display">
       {headers.map((props, idx) => (
         <RecipeTable
           key={idx}
@@ -167,29 +101,63 @@ function SourceTables({ onClick, targets }) {
   );
 }
 
-function DestTable({ onClick, targets }) {
-  if (targets.length > 1) {
+function DestDisplay({ onClick, targets }) {
+  if (targets.length !== 1) {
     return null;
   }
+  const target = [targets];
 
   let rowHeader = data.sources;
   let colHeader = _.intersection(targets, data.sources);
 
+  rowHeader = rowHeader.filter((src) => data.recipe[src][target] !== null);
+  rowHeader = _(rowHeader)
+    .sortBy((src) => data.order.color[data.recipe[src][target]])
+    .value();
+  // console.log(_(rowHeader).groupBy());
+
   return (
-    <RecipeTable
-      rowHeader={rowHeader}
-      colHeader={colHeader}
-      filterFn={(_) => true}
-      onClick={onClick}
-    />
+    <div className="dest-display">
+      <RecipeTable
+        rowHeader={rowHeader}
+        colHeader={colHeader}
+        filterFn={(_) => true}
+        onClick={onClick}
+      />
+    </div>
   );
 }
 
-export function RecipeDisplay({ onClick, targets }) {
+export function RecipeDisplay() {
+  const [target, setTarget] = useState(null);
+  const targets = (() =>
+    target === null
+      ? []
+      : target === "all"
+      ? [...data.targets, "Food-3", "Food-4", "Food-5"]
+      : [target])();
+
+  const onClick = (name) => {
+    setTarget(name);
+  };
+
   return (
     <>
-      <SourceTables onClick={onClick} targets={targets} />
-      {/* <DestTable onClick={onClick} targets={targets} /> */}
+      <div>
+        <ItemTray onClick={setTarget} />
+      </div>
+      <div>
+        {target !== "all" && (
+          <>
+            <h2>{target}</h2>
+            <p>
+              <ItemIcon name={target} />
+            </p>
+          </>
+        )}
+      </div>
+      <SourceDisplay onClick={onClick} targets={targets} />
+      <DestDisplay onClick={onClick} targets={targets} />
     </>
   );
 }

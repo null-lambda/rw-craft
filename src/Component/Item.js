@@ -13,15 +13,20 @@ function ItemIcon({ name }) {
   );
 }
 
-function ItemButton({ name, onClick }) {
+function CountOverlay({ count }) {
+  return <span className="count"> {count} </span>;
+}
+
+function ItemButton({ name, count, onClick, className }) {
   return (
     <button
       type="button"
       title={name}
-      className="item-button"
+      className={`item-button ${className}`}
       onClick={onClick}
     >
       {name === "all" ? "All" : <ItemIcon name={name} />}
+      {!!count && <CountOverlay count={count}></CountOverlay>}
     </button>
   );
 }
