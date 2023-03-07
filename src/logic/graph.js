@@ -20,7 +20,7 @@ export function adjMatrixToList(graph) {
   );
 }
 
-export function connectedComponents(graph) {
+export function connectedcomponentss(graph) {
   const vertices = _.range(graph.length);
   const components = [];
   const visited = new Set();

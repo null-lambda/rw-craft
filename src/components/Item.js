@@ -1,4 +1,4 @@
-import "./App.css";
+import "styles/index.scss";
 
 function ItemIcon({ name }) {
   if (name === null) {

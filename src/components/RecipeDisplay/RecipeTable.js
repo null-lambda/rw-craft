@@ -1,7 +1,6 @@
 // Todo: Resolve prop drilling
-import { filter } from "lodash";
 import data from "../../data";
-import { ItemButton, ItemIcon } from "../Item";
+import { ItemButton } from "../Item";
 
 export function RecipeTable({ rowHeader, colHeader, filterFn, onClick }) {
   const cells = colHeader.map((c) => rowHeader.map((r) => data.recipe[r][c]));

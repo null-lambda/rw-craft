@@ -1,16 +1,17 @@
 import _ from "lodash";
-import { ItemIcon } from "../Item";
-import data from "../../data";
 import React, { useState } from "react";
-import { ItemTray } from "../ItemTray";
-import { connectedComponents, maxTwoColorableSubgraphs } from "../../graph";
+import data from "data";
+import { connectedcomponentss, maxTwoColorableSubgraphs } from "logic/graph";
+import { Button, Radio } from "components/BasicInputs";
+import { ItemIcon } from "components/Item";
+import { ItemTray } from "components/ItemTray";
 import { RecipeTable } from "./RecipeTable";
 
 function decomposeHeader(filterFn, header) {
   const graph = header.map((r) =>
     header.map((c) => filterFn(data.recipe[r][c]))
   );
-  const components = connectedComponents(graph)
+  const components = connectedcomponentss(graph)
     .filter((vs) => vs.length >= 2)
     .map((component) => component.sort((a, b) => a - b));
   return components.map((idx) => idx.map((i) => header[i]));
@@ -80,7 +81,7 @@ function SourceDisplay({ onClick, targets }) {
   headers = decomposeHeader(filterFn, [...header]);
 
   headers = headers.map((header) => {
-    // header = _.sortBy(header, x => data.order.color[x]);
+    // header = _.sortBy(header, (x) => data.order.color[x]);
     let { rowHeader, colHeader } = removeDuplicateHeaders(filterFn, [
       ...header,
     ]);
@@ -116,16 +117,7 @@ function DestDisplay({ onClick, targets }) {
     .value();
   // console.log(_(rowHeader).groupBy());
 
-  return (
-    <div className="dest-display">
-      <RecipeTable
-        rowHeader={rowHeader}
-        colHeader={colHeader}
-        filterFn={(_) => true}
-        onClick={onClick}
-      />
-    </div>
-  );
+  return;
 }
 
 export function RecipeDisplay() {
@@ -141,23 +133,58 @@ export function RecipeDisplay() {
     setTarget(name);
   };
 
+  console.log(data);
+  const options = [
+    ..._.sortBy(
+      _.difference(data.items, ["Food"]),
+      (name) => data.order.color[name]
+    ),
+  ];
+
   return (
     <>
-      <div>
-        <ItemTray onClick={setTarget} />
-      </div>
-      <div>
-        {target !== "all" && (
-          <>
-            <h2>{target}</h2>
-            <p>
-              <ItemIcon name={target} />
-            </p>
-          </>
-        )}
-      </div>
-      <SourceDisplay onClick={onClick} targets={targets} />
-      <DestDisplay onClick={onClick} targets={targets} />
+      {/* <p>Select Item</p> */}
+      <ItemTray onClick={setTarget}>
+        <Radio
+          key={"all"}
+          name="❤️"
+          onClick={() => {
+            onClick("all");
+          }}
+        >
+          All
+        </Radio>
+        {options.map((name) => (
+          <Radio
+            key={name}
+            name="❤️"
+            onClick={() => {
+              onClick(name);
+            }}
+          >
+            <ItemIcon name={name} />
+          </Radio>
+        ))}
+      </ItemTray>
+      {target === "all" ? (
+        <>
+          <hr />
+          <SourceDisplay onClick={onClick} targets={targets} />
+        </>
+      ) : target !== null ? (
+        <>
+          <hr />
+          <ItemIcon name={target} />
+          <p>
+            <strong>
+              <big>{target}</big>
+            </strong>
+          </p>
+          <hr />
+          <SourceDisplay onClick={onClick} targets={targets} />
+          <DestDisplay onClick={onClick} targets={targets} />
+        </>
+      ) : null}
     </>
   );
 }

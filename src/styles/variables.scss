@@ -1,0 +1,21 @@
+:root {
+  --primary-color: hsl(0, 0%, 70%);
+  --secondary-color: rgb(0, 0, 0);
+  --bg-color: #463747;
+  // --bg-color: rgba(187, 152, 77, 0.829);
+  --success-color: rgb(119, 255, 131);
+  --danger-color: rgb(255, 106, 106);
+
+  --text-color: var(--primary-color);
+  --text-color--foucused: white;
+  --text-shadow-color: black;
+
+  --button-color: hsl(0, 0%, 50%);
+  --button-color--focused: white;
+  --button-color--disabled: hsl(0, 0%, 30%);
+
+  --main-bg-color: hsl(0, 0%, 0%, 0.5);
+  --button-bg-color: hsla(275, 16%, 15%, 0.5);
+  // --button-bg-color: rgba(255, 0, 0, 0.9);
+  --button-bg-color--focused: rgba(0, 0, 0, 0.5);
+}
